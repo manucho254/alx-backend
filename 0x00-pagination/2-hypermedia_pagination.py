@@ -26,7 +26,7 @@
 
 import csv
 import math
-from typing import List, Mapping, Any
+from typing import List, Mapping, Union
 
 
 def index_range(page: int, page_size: int) -> tuple:
@@ -83,7 +83,7 @@ class Server:
         return self.__dataset[start:end]
 
     def get_hyper(self, page: int = 1,
-                  page_size: int = 10) -> Mapping[str, Any]:
+                  page_size: int = 10) -> Mapping[str, Union[int, List[List]]]:
         """ get data from page
             Args:
                 page: page number
@@ -91,7 +91,6 @@ class Server:
             Return:
                  -> dict with key value pairs
         """
-
         data = self.get_page(page, page_size)
         len_data = len(data)
         total_pages = math.ceil(len(self.__dataset) / page_size)
@@ -100,14 +99,12 @@ class Server:
 
         if page == 1:
             next_page = page + 1
-        elif page > 1 and len_data == 0:
-            prev_page = page - 1
         elif page > 1 and len_data > 0:
             next_page = page + 1
             prev_page = page - 1
+        elif page > 1 and len_data == 0:
+            prev_page = page - 1
 
-        res = {"page_size": len_data, "page": page, "data": data,
-               "next_page": next_page, "prev_page": prev_page,
-               "total_pages": total_pages}
-
-        return res
+        return {"page_size": len_data, "page": page, "data": data,
+                "next_page": next_page, "prev_page": prev_page,
+                "total_pages": total_pages}
