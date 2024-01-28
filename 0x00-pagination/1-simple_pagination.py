@@ -41,7 +41,7 @@ class Server:
     DATA_FILE = "Popular_Baby_Names.csv"
 
     def __init__(self):
-        """ initalize class
+        """ initialize class
         """
         self.__dataset = None
 
