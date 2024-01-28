@@ -11,11 +11,22 @@
     If the input arguments are out of range for the dataset,
     an empty list should be returned.
 
+
+    Implement a get_hyper method that takes the same arguments
+    (and defaults) as get_page and returns a dictionary
+    containing the following key-value pairs:
+
+         page_size: the length of the returned dataset page
+         page: the current page number
+         data: the dataset page (equivalent to return from previous task)
+         next_page: number of the next page, None if no next page
+         prev_page: number of the previous page, None if no previous page
+         total_pages: the total number of pages in the dataset as an integer
 """
 
 import csv
 import math
-from typing import List
+from typing import List, Mapping, Any
 
 
 def index_range(page: int, page_size: int) -> tuple:
@@ -71,4 +82,32 @@ class Server:
 
         return self.__dataset[start:end]
 
+    def get_hyper(self, page: int = 1,
+                  page_size: int = 10) -> Mapping[str, Any]:
+        """ get data from page
+            Args:
+                page: page number
+                page_size: size of page
+            Return:
+                 -> dict with key value pairs
+        """
 
+        data = self.get_page(page, page_size)
+        len_data = len(data)
+        total_pages = math.ceil(len(self.__dataset) / page_size)
+
+        next_page, prev_page = (None, None)
+
+        if page == 1:
+            next_page = page + 1
+        elif page > 1 and len_data == 0:
+            prev_page = page - 1
+        elif page > 1 and len_data > 0:
+            next_page = page + 1
+            prev_page = page - 1
+
+        res = {"page_size": len_data, "page": page, "data": data,
+               "next_page": next_page, "prev_page": prev_page,
+               "total_pages": total_pages}
+
+        return res
