@@ -82,7 +82,7 @@ class Server:
         return self.__dataset[start:end]
 
     def get_hyper(self, page: int = 1,
-                  page_size: int = 10) -> Dict[str, Union[int, List[List]]]:
+                  page_size: int = 10) -> Dict:
         """ get page data
             Args:
                 page: page number
