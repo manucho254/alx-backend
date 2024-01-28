@@ -84,12 +84,12 @@ class Server:
 
     def get_hyper(self, page: int = 1,
                   page_size: int = 10) -> Mapping[str, Any]:
-        """ get data from page
+        """ get page data
             Args:
                 page: page number
                 page_size: size of page
             Return:
-                 -> dict with key value pairs
+                 dict with key value pairs
         """
         data = self.get_page(page, page_size)
         len_data = len(data)
