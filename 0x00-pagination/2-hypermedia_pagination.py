@@ -25,7 +25,7 @@
 
 import csv
 import math
-from typing import List, Dict, Union
+from typing import List, Dict, Union, Any
 
 
 def index_range(page: int, page_size: int) -> tuple:
@@ -79,7 +79,7 @@ class Server:
 
         return self.__dataset[start:end]
 
-    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict:
+    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict[str, Any]:
         """get page data
         Args:
             page: page number
@@ -87,13 +87,13 @@ class Server:
         Return:
              dict with key value pairs
         """
-        data = self.get_page(page, page_size)
-        total_pages = math.ceil(len(self.dataset()) / page_size)
+        self.dataset()
+        total_pages = math.ceil(len(self.__dataset) / page_size)
 
         return {
             "page_size": page_size,
             "page": page,
-            "data": data,
+            "data": self.get_page(page, page_size),
             "next_page": page + 1 if total_pages > 1 else None,
             "prev_page": page - 1 if page > 1 else None,
             "total_pages": total_pages,
