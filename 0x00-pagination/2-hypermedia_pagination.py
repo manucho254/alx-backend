@@ -87,29 +87,14 @@ class Server:
         Return:
              dict with key value pairs
         """
-        try:
-            data = self.get_page(page, page_size)
-        except AssertionError:
-            data = []
-
-        len_data = len(data)
+        data = self.get_page(page, page_size)
         total_pages = math.ceil(len(self.__dataset) / page_size)
 
-        next_page, prev_page = (None, None)
-
-        if page == 1:
-            next_page = page + 1
-        elif page > 1 and len_data > 0:
-            next_page = page + 1
-            prev_page = page - 1
-        elif page > 1 and len_data == 0:
-            prev_page = page - 1
-
         return {
-            "page_size": len_data,
+            "page_size": len(data),
             "page": page,
             "data": data,
-            "next_page": next_page,
-            "prev_page": prev_page,
+            "next_page": page + 1 if total_pages > 1 else None,
+            "prev_page": page - 1 if page > 1 else None,
             "total_pages": total_pages,
         }
