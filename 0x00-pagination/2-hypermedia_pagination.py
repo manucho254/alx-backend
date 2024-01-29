@@ -88,7 +88,7 @@ class Server:
              dict with key value pairs
         """
         data = self.get_page(page, page_size)
-        total_pages = math.ceil(len(self.__dataset) / page_size)
+        total_pages = math.ceil(len(self.dataset()) / page_size)
 
         return {
             "page_size": page_size,
