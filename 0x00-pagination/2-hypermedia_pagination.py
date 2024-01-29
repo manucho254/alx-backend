@@ -29,12 +29,12 @@ from typing import List, Dict, Union
 
 
 def index_range(page: int, page_size: int) -> tuple:
-    """ get index range
-        Args:
-             page: current page
-             page_size: size of page
-        Return:
-               tuple with index range
+    """get index range
+    Args:
+         page: current page
+         page_size: size of page
+    Return:
+           tuple with index range
     """
     if page == 0:
         return (0, 0)
@@ -46,18 +46,16 @@ def index_range(page: int, page_size: int) -> tuple:
 
 
 class Server:
-    """Server class to paginate a database of popular baby names.
-    """
+    """Server class to paginate a database of popular baby names."""
+
     DATA_FILE = "Popular_Baby_Names.csv"
 
     def __init__(self):
-        """ initialize class
-        """
+        """initialize class"""
         self.__dataset = None
 
     def dataset(self) -> List[List]:
-        """Cached dataset
-        """
+        """Cached dataset"""
         if self.__dataset is None:
             with open(self.DATA_FILE) as f:
                 reader = csv.reader(f)
@@ -66,12 +64,12 @@ class Server:
             return self.__dataset
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
-        """  get data from page
-             Args:
-                 page: page number
-                 page_size: size of page
-             Return:
-                   an array of arrays
+        """get data from page
+        Args:
+            page: page number
+            page_size: size of page
+        Return:
+              an array of arrays
         """
         assert isinstance(page, int) and isinstance(page_size, int)
         assert page_size >= 1 and page >= 1
@@ -81,16 +79,19 @@ class Server:
 
         return self.__dataset[start:end]
 
-    def get_hyper(self, page: int = 1,
-                  page_size: int = 10) -> Dict:
-        """ get page data
-            Args:
-                page: page number
-                page_size: size of page
-            Return:
-                 dict with key value pairs
+    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict:
+        """get page data
+        Args:
+            page: page number
+            page_size: size of page
+        Return:
+             dict with key value pairs
         """
-        data = self.get_page(page, page_size)
+        try:
+            data = self.get_page(page, page_size)
+        except AssertionError:
+            data = []
+
         len_data = len(data)
         total_pages = math.ceil(len(self.__dataset) / page_size)
 
@@ -104,6 +105,11 @@ class Server:
         elif page > 1 and len_data == 0:
             prev_page = page - 1
 
-        return {"page_size": len_data, "page": page, "data": data,
-                "next_page": next_page, "prev_page": prev_page,
-                "total_pages": total_pages}
+        return {
+            "page_size": len_data,
+            "page": page,
+            "data": data,
+            "next_page": next_page,
+            "prev_page": prev_page,
+            "total_pages": total_pages,
+        }
