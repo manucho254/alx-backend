@@ -61,7 +61,7 @@ class Server:
                 reader = csv.reader(f)
                 dataset = [row for row in reader]
                 self.__dataset = dataset[1:]
-                
+
         return self.__dataset
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
@@ -88,13 +88,13 @@ class Server:
         Return:
              dict with key value pairs
         """
-
+        data = self.get_page(page, page_size)
         total_pages = math.ceil(len(self.dataset()) / page_size)
 
         return {
             "page_size": page_size,
             "page": page,
-            "data": self.get_page(page, page_size),
+            "data": data,
             "next_page": page + 1 if total_pages > 1 else None,
             "prev_page": page - 1 if page > 1 else None,
             "total_pages": total_pages,
