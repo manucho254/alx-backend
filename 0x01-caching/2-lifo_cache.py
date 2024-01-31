@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-""" FIFO caching method
+""" LIFOCache caching method
 """
 
 BaseCaching = __import__("base_caching").BaseCaching
 
 
-class FIFOCache(BaseCaching):
-    """FIFOCache class that inherits for BaseCache"""
+class LIFOCache(BaseCaching):
+    """LIFOCache class that inherits for BaseCache"""
 
     def __init__(self):
         """initialize class"""
@@ -33,15 +33,16 @@ class FIFOCache(BaseCaching):
 
         cache.update({key: item})
 
-        # remove the first inserted item from cache
+        # remove the last inserted item in cache before
+        # the current added value
         # if the length is greater that self.MAX_ITEMS
         if len(cache) > self.MAX_ITEMS:
-            min_val = min(self.track_items.keys())
-            discard_key = self.track_items[min_val]
+            max_val = max(self.track_items.keys()) - 1
+            discard_key = self.track_items[max_val]
 
             print(f"DISCARD: {discard_key}")
             del cache[discard_key]
-            del self.track_items[min_val]
+            del self.track_items[max_val]
 
         self.__dict__.update(data)
 
