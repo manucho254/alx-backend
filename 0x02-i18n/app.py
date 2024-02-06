@@ -85,4 +85,6 @@ def get_timezone() -> str:
 def home():
     """home page route"""
     current_time = format_datetime(datetime.now())
-    return render_template("index.html", current_time=current_time, user=g.user)
+    return render_template("index.html",
+                           current_time=current_time,
+                           user=g.user)
