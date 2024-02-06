@@ -28,16 +28,6 @@ babel = Babel(app, default_timezone="UTC")
 app.config.from_object(Config)
 
 
-# locale selector
-@babel.localeselector
-def get_locale():
-    """babel locale selector"""
-    valid_locales = app.config["LANGUAGES"]
-    if request.args.get("locale") in valid_locales:
-        return request.args.get("locale")
-    return request.accept_languages.best_match(app.config["LANGUAGES"])
-
-
 def get_user() -> Dict | None:
     """get user by using id"""
     user_id = request.args.get("login_as", None)
@@ -50,6 +40,16 @@ def get_user() -> Dict | None:
 def before_request():
     """update current user"""
     g.user = get_user()
+
+
+# locale selector
+@babel.localeselector
+def get_locale():
+    """babel locale selector"""
+    valid_locales = app.config["LANGUAGES"]
+    if request.args.get("locale") in valid_locales:
+        return request.args.get("locale")
+    return request.accept_languages.best_match(app.config["LANGUAGES"])
 
 
 @app.route("/", strict_slashes=False)
