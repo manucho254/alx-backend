@@ -3,12 +3,16 @@
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
 #
-home_title "Welcome to Holberton"
-home_header "Hello world!"
+msgid "home_title"
+msgstr "Welcome to Holberton"
+
+msgid "home_header"
+msgstr "Hello world!"
+
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-02-06 21:05+0300\n"
-"PO-Revision-Date: 2024-02-06 21:06+0300\n"
+"PO-Revision-Date: 2024-02-06 22:47+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
 "Language-Team: en <LL@li.org>\n"
