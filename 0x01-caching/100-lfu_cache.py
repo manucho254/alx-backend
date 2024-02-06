@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """ LFU caching method
 """
-from datetime import datetime
 from collections import OrderedDict
 
 BaseCaching = __import__("base_caching").BaseCaching
