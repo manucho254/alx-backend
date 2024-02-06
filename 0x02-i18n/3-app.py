@@ -2,8 +2,7 @@
 """ Basic Flask app """
 
 from flask import Flask, render_template, request
-from flask_babel import Babel, gettext as _
-
+from flask_babel import Babel
 
 class Config:
     """Language config class"""
