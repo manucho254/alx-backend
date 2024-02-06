@@ -76,9 +76,8 @@ def get_timezone():
     if g.user:
         if check_valid_timezone(g.user.get("timezone")):
             return g.user.get("timezone")
-        
-    return app.config["BABEL_DEFAULT_TIMEZONE"]
 
+    return app.config["BABEL_DEFAULT_TIMEZONE"]
 
 
 @app.route("/", strict_slashes=False)
