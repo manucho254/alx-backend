@@ -56,11 +56,10 @@ def get_user() -> Dict | None:
 @app.before_request
 def before_request():
     """update current user"""
-    current_user = get_user()
-    g.user = current_user
+    g.user = get_user()
 
 
 @app.route("/", strict_slashes=False)
 def home():
     """home page route"""
-    return render_template("5-index.html")
+    return render_template("5-index.html", user=g.user)
