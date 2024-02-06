@@ -2,7 +2,7 @@
 """ Basic Flask app """
 
 from flask import Flask, render_template, request
-from flask_babel import Babel
+from flask_babel import Babel, gettext as _
 
 
 class Config:
@@ -19,16 +19,21 @@ app.config.from_object(Config)
 
 
 # locale selector
-@babel.localeselector
 def get_locale():
     """babel locale selector"""
-    return request.accept_languages.best_match(app.config["LANGUAGES"].keys())
+    return request.accept_languages.best_match(app.config["LANGUAGES"])
+
+
+babel.init_app(app, locale_selector=get_locale)
 
 
 @app.route("/", strict_slashes=False)
 def home():
     """home page route"""
-    return render_template("2-index.html")
+    data = {"home_title": _("Welcome to Holberton"),
+            "home_header": _("Hello world!")}
+
+    return render_template("3-index.html", **data)
 
 
 if __name__ == "__main__":
