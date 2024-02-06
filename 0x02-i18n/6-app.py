@@ -48,12 +48,9 @@ def get_locale():
     valid_locales = app.config["LANGUAGES"]
     if request.args.get("locale") in valid_locales:
         return request.args.get("locale")
-    if g.user is not None:
-        if g.user["locale"] in valid_locales:
-            return g.user["locale"]
-    if request.headers.get("Accept-Language").split(",")[1][0:2] \
-        in valid_locales:
-        request.headers.get("Accept-Language").split(",")[1][0:2]
+    if g.user:
+        if g.user.get("locale") in valid_locales:
+            return g.user.get("locale")
 
     return request.accept_languages.best_match(app.config["LANGUAGES"])
 
