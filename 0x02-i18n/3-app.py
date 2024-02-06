@@ -22,16 +22,14 @@ app.config.from_object(Config)
 @babel.localeselector
 def get_locale():
     """babel locale selector"""
-    return request.accept_languages.best_match(app.config["LANGUAGES"])
+    return request.accept_languages.best_match(app.config["LANGUAGES"].keys())
 
 
 @app.route("/", strict_slashes=False)
 def home():
     """home page route"""
-    data = {"home_title": _("Welcome to Holberton"),
-            "home_header": _("Hello world!")}
 
-    return render_template("3-index.html", **data)
+    return render_template("3-index.html")
 
 
 if __name__ == "__main__":
