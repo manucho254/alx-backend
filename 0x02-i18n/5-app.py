@@ -3,7 +3,6 @@
 
 from flask import Flask, render_template, request, g
 from flask_babel import Babel
-from typing import Dict
 
 
 class Config:
@@ -12,6 +11,11 @@ class Config:
     LANGUAGES = ["en", "fr"]
     BABEL_DEFAULT_LOCALE = "en"
     BABEL_DEFAULT_TIMEZONE = "UTC"
+
+
+app = Flask(__name__)
+babel = Babel(app, default_timezone="UTC")
+app.config.from_object(Config)
 
 
 # mock data for users table
@@ -23,12 +27,7 @@ users = {
 }
 
 
-app = Flask(__name__)
-babel = Babel(app, default_timezone="UTC")
-app.config.from_object(Config)
-
-
-def get_user() -> Dict | None:
+def get_user():
     """get user by using id"""
     user_id = request.args.get("login_as", None)
     if user_id is None:
