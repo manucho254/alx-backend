@@ -26,7 +26,7 @@ msgstr "Hello world!"
 
 # logged in
 msgid "logged_in_as"
-msgstr "You are logged in as "
+msgstr "You are logged in as %(username)s."
 
 # logged out
 msgid "not_logged_in"
