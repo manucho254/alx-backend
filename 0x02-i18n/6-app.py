@@ -60,4 +60,4 @@ def get_locale():
 @app.route("/", strict_slashes=False)
 def home():
     """home page route"""
-    return render_template("5-index.html", user=g.user)
+    return render_template("6-index.html", user=g.user)

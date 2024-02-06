@@ -2,7 +2,8 @@
 """ Basic Flask app """
 
 from flask import Flask, render_template, request, g
-from flask_babel import Babel
+from flask_babel import Babel, format_datetime
+from datetime import datetime
 import pytz
 
 
@@ -58,7 +59,6 @@ def get_locale():
 
 
 def check_valid_timezone(timezone_: str) -> bool:
-    """ check if timezone is valid """
     try:
         zone = pytz.timezone(timezone_)
         print(zone)
@@ -71,17 +71,18 @@ def check_valid_timezone(timezone_: str) -> bool:
 def get_timezone():
     """babel locale selector"""
     timezone = request.args.get("timezone")
+
     if check_valid_timezone(timezone):
         return timezone
     if g.user:
         if check_valid_timezone(g.user.get("timezone")):
             return g.user.get("timezone")
-        
-    return app.config["BABEL_DEFAULT_TIMEZONE"]
 
+    return app.config["BABEL_DEFAULT_TIMEZONE"]
 
 
 @app.route("/", strict_slashes=False)
 def home():
     """home page route"""
-    return render_template("7-index.html", user=g.user)
+    current_time = format_datetime(datetime.now())
+    return render_template("index.html", current_time=current_time, user=g.user)
