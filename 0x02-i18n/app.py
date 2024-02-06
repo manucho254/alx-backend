@@ -45,7 +45,7 @@ def before_request():
 
 # locale selector
 @babel.localeselector
-def get_locale():
+def get_locale() -> str:
     """babel locale selector"""
     valid_locales = app.config["LANGUAGES"]
     locale = request.args.get("locale")
@@ -68,7 +68,7 @@ def check_valid_timezone(timezone_: str) -> bool:
 
 
 @babel.timezoneselector
-def get_timezone():
+def get_timezone() -> str:
     """babel locale selector"""
     timezone = request.args.get("timezone")
 
