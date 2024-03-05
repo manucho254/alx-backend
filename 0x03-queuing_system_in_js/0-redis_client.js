@@ -1,10 +1,10 @@
-import { createClient } from "redis";
+import redis from "redis";
 
-const client = createClient()
-  .on("error", (err) =>
-    console.log("Redis client not connected to the server: ", err)
-  )
-  .connect();
 
-console.log("Redis client connected to the server");
-client.disconnect();
+(async function () {
+	const redisURL = "redis://127.0.0.1:6379"
+	const client = await redis.createClient({url: redisURL})
+		.on('error', err => console.log("Redis client not connected to the server:", err))
+
+	client.on("connect", () => console.log("Redis client connected to the server"));
+})()
