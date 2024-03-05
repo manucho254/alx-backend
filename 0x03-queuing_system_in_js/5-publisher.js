@@ -21,9 +21,8 @@ function sleep(ms) {
 
 async function publishMessage(message, time) {
   console.log(`About to send ${message}`);
-  const channel = client.channel("holberton school channel");
   await sleep(time);
-  channel.publish(message);
+  client.publish("holberton school channel", message);
 }
 
 publishMessage("Holberton Student #1 starts course", 100);
