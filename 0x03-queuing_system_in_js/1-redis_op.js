@@ -10,25 +10,24 @@ let client;
   );
 
   client.on("connect", () =>
-      console.log("Redis client connected to the server")
+    console.log("Redis client connected to the server")
   );
 })();
 
-
 // add new key and value pair
-async function setNewSchool(schoolName, value){
-    await client.set(schoolName, value, redis.print);
-};
+async function setNewSchool(schoolName, value) {
+  await client.set(schoolName, value, redis.print);
+}
 
 // display by key
 async function displaySchoolValue(schoolName) {
-   await client.get(schoolName, (err, data) => {
-      if(err){
-	  throw err;
-      }
-      console.log(data);
-   });
-};
+  await client.get(schoolName, (err, data) => {
+    if (err) {
+      throw err;
+    }
+    console.log(data);
+  });
+}
 
 displaySchoolValue("Holberton");
 setNewSchool("HolbertonSanFrancisco", "100");
