@@ -30,6 +30,7 @@ async function displaySchoolValue(schoolName) {
   });
 }
 
+//  promisify displaySchoolValue
 displaySchoolValue = util.promisify(displaySchoolValue);
 
 displaySchoolValue("Holberton");
