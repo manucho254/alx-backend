@@ -1,5 +1,5 @@
 import redis from "redis";
-const util = require("util");
+import util from "util";
 
 const redisURL = "redis://127.0.0.1:6379";
 let client;

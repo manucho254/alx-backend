@@ -1,8 +1,8 @@
 import redis from "redis";
+import util from "util";
+import express from "express";
 
 const redisURL = "redis://127.0.0.1:6379";
-const express = require("express");
-const util = require("util");
 const app = express();
 const port = 1245;
 let client;
@@ -36,7 +36,7 @@ const listProducts = [
 
 function getItemById(id) {
   for (let item of listProducts) {
-     if (item["itemId"] === id) return item;
+    if (item["itemId"] === id) return item;
   }
 }
 
@@ -69,8 +69,8 @@ app.get("/list_products/:itemId", (req, res) => {
   const { itemId } = req.params;
   const item = getItemById(Number(itemId));
   if (!item) res.send(JSON.stringify({ status: "Product not found" }));
-  
-  const currentStock = getCurrentReservedStockById(itemId)
+
+  const currentStock = getCurrentReservedStockById(itemId);
   if (!currentStock) item["currentQuantity"] = currentStock;
   else item["currentQuantity"] = item["initialAvailableQuantity"];
   res.send(JSON.stringify(item));

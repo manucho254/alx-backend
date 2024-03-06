@@ -1,6 +1,6 @@
-let kue = require("kue"),
-  queue = kue.createQueue();
+import kue from "kue";
 
+const queue = kue.createQueue();
 const job = queue
   .create("push_notification_code", {
     phoneNumber: "070000000",

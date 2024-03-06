@@ -1,9 +1,9 @@
 import redis from "redis";
-let kue = require("kue"),
-  queue = kue.createQueue();
+import util from "util";
+import express from "express";
+
+const queue = kue.createQueue();
 const redisURL = "redis://127.0.0.1:6379";
-const express = require("express");
-const util = require("util");
 const app = express();
 const port = 1245;
 let client,
@@ -51,8 +51,9 @@ app.get("/reserve_seat", (req, res) => {
     .save(function (err) {
       if (!err) {
         res.send(JSON.stringify({ status: "Reservation in process" }));
+      } else {
+        res.send(JSON.stringify({ status: "Reservation failed" }));
       }
-      res.send(JSON.stringify({ status: "Reservation failed" }));
     });
 });
 

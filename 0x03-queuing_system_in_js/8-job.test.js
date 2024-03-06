@@ -1,7 +1,8 @@
 import createPushNotificationsJobs from "./8-job.js";
-let kue = require("kue"),
-  queue = kue.createQueue();
-const { expect } = require("chai");
+import kue from "kue";
+import { expect } from "chai";
+
+const queue = kue.createQueue();
 
 describe("createPushNotificationsJobs", function () {
   before(function () {

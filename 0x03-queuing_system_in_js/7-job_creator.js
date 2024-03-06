@@ -1,3 +1,5 @@
+import kue from "kue";
+
 const jobs = [
   {
     phoneNumber: "4153518780",
@@ -45,8 +47,7 @@ const jobs = [
   },
 ];
 
-let kue = require("kue"),
-  queue = kue.createQueue();
+const queue = kue.createQueue();
 
 jobs.forEach((data) => {
   const job = queue
