@@ -4,14 +4,9 @@ function createPushNotificationsJobs(jobs, queue) {
   }
 
   jobs.forEach((data) => {
-    console.log(data)
-    const job = queue
-      .create("push_notification_code", data)
-      .save(function (err) {
-	if (!err) {
-          console.log(`Notification job created: ${job.id}`);
-        }
-      })
+    const job = queue.create("push_notification_code", data);
+
+    job
       .on("complete", function (result) {
         console.log(`Notification job ${job.id} completed`);
       })
@@ -20,6 +15,11 @@ function createPushNotificationsJobs(jobs, queue) {
       })
       .on("progress", function (progress, data) {
         console.log(`Notification job ${job.id} ${progress}% complete`);
+      })
+      .save(function (err) {
+        if (!err) {
+          console.log(`Notification job created: ${job.id}`);
+        }
       });
   });
 }

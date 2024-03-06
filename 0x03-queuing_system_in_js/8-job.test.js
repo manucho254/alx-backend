@@ -35,9 +35,9 @@ describe("createPushNotificationsJobs", function () {
       },
     ];
     createPushNotificationsJobs(jobs, queue);
-    // expect(queue.testMode.jobs.length).to.equal(3);
-    //expect(queue.testMode.jobs[0].phoneNumber).to.equal("4153518743");
-    //expect(queue.testMode.jobs[1].phoneNumber).to.equal("4153538781");
-    //expect(queue.testMode.jobs[2].phoneNumber).to.equal("4153118782");
+    expect(queue.testMode.jobs.length).to.equal(3);
+    expect(queue.testMode.jobs[0].data.phoneNumber).to.equal("4153518743");
+    expect(queue.testMode.jobs[1].data.phoneNumber).to.equal("4153538781");
+    expect(queue.testMode.jobs[2].data.phoneNumber).to.equal("4153118782");
   });
 });
