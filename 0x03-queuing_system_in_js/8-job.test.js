@@ -1,6 +1,6 @@
 import createPushNotificationsJobs from "./8-job.js";
 let kue = require("kue"),
-	queue = kue.createQueue();
+  queue = kue.createQueue();
 const { expect } = require("chai");
 
 describe("createPushNotificationsJobs", function () {
@@ -14,7 +14,9 @@ describe("createPushNotificationsJobs", function () {
   });
 
   it("Error if jobs is not array", function () {
-    expect(function () { createPushNotificationsJobs(null, queue) }).to.throw("Jobs is not an array");
+    expect(function () {
+      createPushNotificationsJobs(null, queue);
+    }).to.throw("Jobs is not an array");
   });
 
   it("Test jobs creation", function () {
