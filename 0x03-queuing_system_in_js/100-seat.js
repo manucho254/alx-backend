@@ -9,15 +9,6 @@ const port = 1245;
 let client,
   reservationEnabled = true;
 
-function reserveSeat(number) {
-  client.set("available_seats", number);
-}
-
-const getItem = util.promisify(client.get).bind(client);
-async function getCurrentAvailableSeats() {
-  return await getItem("available_seats");
-}
-
 (async function () {
   client = redis.createClient({ url: redisURL });
   client.on("error", (err) =>
@@ -29,6 +20,15 @@ async function getCurrentAvailableSeats() {
     reserveSeat(50);
   });
 })();
+
+function reserveSeat(number) {
+  client.set("available_seats", number);
+}
+
+const getItem = util.promisify(client.get).bind(client);
+async function getCurrentAvailableSeats() {
+  return await getItem("available_seats");
+}
 
 app.get("/available_seats", (req, res) => {
   const seats = getCurrentAvailableSeats();
