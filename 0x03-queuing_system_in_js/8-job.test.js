@@ -8,11 +8,8 @@ describe("createPushNotificationsJobs", function () {
     queue.testMode.enter();
   });
 
-  afterEach(function () {
-    queue.testMode.clear();
-  });
-
   after(function () {
+    queue.testMode.clear();
     queue.testMode.exit();
   });
 
