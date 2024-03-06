@@ -17,7 +17,7 @@ let client,
 
   client.on("connect", () => {
     console.log("Redis client connected to the server");
-    reserveSeat(50);
+    client.set("available_seats", 50);
   });
 })();
 
@@ -31,15 +31,16 @@ async function getCurrentAvailableSeats() {
 }
 
 app.get("/available_seats", (req, res) => {
-  const seats = getCurrentAvailableSeats();
-  res.send(JSON.stringify({ numberOfAvailableSeats: seats }));
+  getCurrentAvailableSeats().then((seats) => {
+      res.send(JSON.stringify({ numberOfAvailableSeats: seats }));
+  })
 });
 
 app.get("/reserve_seat", (req, res) => {
   if (!reservationEnabled) {
     res.send(JSON.stringify({ status: "Reservation are blocked" }));
   }
-  const job = queue.create("reserve_seat", data);
+  const job = queue.create("reserve_seat");
 
   job
     .on("complete", function (result) {
@@ -51,8 +52,9 @@ app.get("/reserve_seat", (req, res) => {
     .save(function (err) {
       if (!err) {
         res.send(JSON.stringify({ status: "Reservation in process" }));
+      } else {
+        res.send(JSON.stringify({ status: "Reservation failed" }));
       }
-      res.send(JSON.stringify({ status: "Reservation failed" }));
     });
 });
 
