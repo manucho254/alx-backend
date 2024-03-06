@@ -8,10 +8,12 @@ const job = queue
   })
   .save(function (err) {
     if (!err) {
-        console.log(`Notification job created: ${job.id}`)
-    };
-  }).on("complete", function (result) {
-      console.log("Notification job completed");
-  }).on("failed attempt", function (errorMessage) {
-     console.log("Notification job failed");
+      console.log(`Notification job created: ${job.id}`);
+    }
+  })
+  .on("complete", function (result) {
+    console.log("Notification job completed");
+  })
+  .on("failed attempt", function (errorMessage) {
+    console.log("Notification job failed");
   });
