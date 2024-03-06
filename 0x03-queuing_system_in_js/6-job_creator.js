@@ -7,13 +7,11 @@ const job = queue
     message: "Manucho is nice",
   })
   .save(function (err) {
-    if (!err) console.log("Notification job failed");
-  });
-
-job
-  .on("complete", function (result) {
-    console.log(`Notification job created: ${result}`);
-  })
-  .on("failed attempt", function (errorMessage) {
-    console.log("Notification job failed");
+    if (!err) {
+        console.log(`Notification job created: ${job.id}`)
+    };
+  }).on("complete", function (result) {
+      console.log("Notification job completed");
+  }).on("failed attempt", function (errorMessage) {
+     console.log("Notification job failed");
   });
