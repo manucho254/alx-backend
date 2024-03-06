@@ -35,7 +35,9 @@ const listProducts = [
 ];
 
 function getItemById(id) {
-  return listProducts[id];
+  for (let item of listProducts) {
+     if (item["itemId"] === id) return item;
+  }
 }
 
 (async function () {
@@ -54,11 +56,10 @@ function reserveStockById(itemId, stock) {
   client.set(itemId, stock);
 }
 
+const getItem = util.promisify(client.get).bind(client);
 async function getCurrentReservedStockById(itemId) {
-  return await client.get(itemId);
+  return await getItem(itemId);
 }
-
-const getCurrent = util.promisify(getCurrentReservedStockById);
 
 app.get("/list_products", (req, res) => {
   res.send(JSON.stringify(listProducts));
@@ -68,11 +69,11 @@ app.get("/list_products/:itemId", (req, res) => {
   const { itemId } = req.params;
   const item = getItemById(Number(itemId));
   if (!item) res.send(JSON.stringify({ status: "Product not found" }));
-  getCurrent(itemId).then((stock) => {
-    if (!stock) item["currentQuantity"] = currentQuantity;
-    else item["currentQuantity"] = item["initialAvailableQuantity"];
-    res.send(JSON.stringify(item));
-  });
+  
+  const currentStock = getCurrentReservedStockById(itemId)
+  if (!currentStock) item["currentQuantity"] = currentStock;
+  else item["currentQuantity"] = item["initialAvailableQuantity"];
+  res.send(JSON.stringify(item));
 });
 
 app.get("/reserve_product/:itemId", (req, res) => {
